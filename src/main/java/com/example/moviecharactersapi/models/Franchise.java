@@ -1,6 +1,9 @@
 package com.example.moviecharactersapi.models;
 
+import com.sun.istack.Nullable;
+
 import javax.persistence.*;
+import java.util.Set;
 
 @Entity
 public class Franchise {
@@ -14,5 +17,10 @@ public class Franchise {
 
     @Column
     public String description;
+
+    @Nullable
+    @OneToMany(mappedBy="franchise")
+    public Set<Movie> movieFranchise;
+
 
 }

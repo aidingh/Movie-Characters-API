@@ -33,4 +33,29 @@ public class CharacterController {
         }
         return null;
     }
+
+    @GetMapping("/update/character")
+    public Characters updateCharacterById(@RequestBody Characters character)
+    {
+        Characters tempChar = getCharacterById(character.id);
+        tempChar.setAlias(character.alias);
+        tempChar.setFullName(character.fullName);
+        tempChar.setGender(character.gender);
+        tempChar.setPictureUrl(character.pictureUrl);
+        return characterRepository.save(tempChar);
+    }
+
+    @DeleteMapping("/delete/character/{id}")
+    public boolean deleteCharacterById(@PathVariable Integer id)
+    {
+        if(this.getCharacterById(id) != null){
+             characterRepository.deleteById(id);
+
+             return true;
+        }
+        else{
+            return false;
+        }
+    }
+
 }

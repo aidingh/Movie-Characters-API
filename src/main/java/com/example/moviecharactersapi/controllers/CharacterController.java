@@ -50,7 +50,6 @@ public class CharacterController {
     {
         if(this.getCharacterById(id) != null){
              characterRepository.deleteById(id);
-
              return true;
         }
         else{

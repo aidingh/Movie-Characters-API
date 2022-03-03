@@ -13,6 +13,17 @@ import java.util.Set;
 @Getter
 @Setter
 public class Characters {
+    @Override
+    public String toString() {
+        return "Characters{" +
+                "id=" + id +
+                ", fullName='" + fullName + '\'' +
+                ", alias='" + alias + '\'' +
+                ", gender='" + gender + '\'' +
+                ", pictureUrl='" + pictureUrl + '\'' +
+                ", movies=" + movies +
+                '}';
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -31,6 +42,6 @@ public class Characters {
     public String pictureUrl;
 
     @Nullable
-    @ManyToMany(mappedBy = "characters")
+    @ManyToMany(mappedBy = "characters", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     List<Movie> movies;
 }

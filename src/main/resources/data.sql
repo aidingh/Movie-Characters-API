@@ -1,8 +1,5 @@
 
 
-
-
-
 INSERT INTO characters(alias, full_name, gender, picture_url) VALUES ('Adam', 'Hellsinborg', 'male', 'Dota.org');
 INSERT INTO characters(alias, full_name, gender, picture_url) VALUES ('Gini', 'Aidin Ghassemloi', 'male', 'pokemonpics.org');
 INSERT INTO characters(alias, full_name, gender, picture_url) VALUES ('Rickard', 'RIcks', 'male', 'Dota.org');
@@ -17,10 +14,10 @@ INSERT INTO movie(movie_title, genre, release_year, director,picture,trailer_lin
 INSERT INTO movie(movie_title, genre, release_year, director,picture,trailer_link) VALUES ('Avengers', 'Action', '2044', 'Revees','Aveng.nu','Avengers.nu');
 
 
---INSERT INTO franchise(name, description) VALUES ('STAR TRILOGY', 'mega awesome movie');
---INSERT INTO franchise(name, description) VALUES ('DC Comics', 'bat bat bat');
-
---INSERT INTO movie(movie_title, genre, release_year, director,picture,trailer_link,franchise_id) VALUES ('death', 'horror', '2000', 'aidin','seed.nu','death.nu',1);
+INSERT INTO franchise(name, description) VALUES ('STAR TRILOGY', 'mega awesome movie');
+INSERT INTO franchise(name, description) VALUES ('DC Comics', 'bat bat bat');
+INSERT INTO franchise(name, description) VALUES ('Atomic guy', 'kinda sucks tbh');
+INSERT INTO franchise(name, description) VALUES ('The infidels', 'bom bom bom');
 
 
 INSERT INTO movie_characters(movie_id, characters_id) VALUES (1,2);
@@ -29,3 +26,9 @@ INSERT INTO movie_characters(movie_id, characters_id) VALUES (2,3);
 INSERT INTO movie_characters(movie_id, characters_id) VALUES (3,6);
 INSERT INTO movie_characters(movie_id, characters_id) VALUES (4,5);
 INSERT INTO movie_characters(movie_id, characters_id) VALUES (2,7);
+
+
+SELECT * FROM movie_characters;
+SELECT * FROM characters;
+SELECT * FROM movie;
+SELECT * FROM franchise;

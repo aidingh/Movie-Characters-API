@@ -13,6 +13,20 @@ import java.util.stream.Collectors;
 @Setter
 @Entity
 public class Movie {
+    @Override
+    public String toString() {
+        return "Movie{" +
+                "id=" + id +
+                ", movieTitle='" + movieTitle + '\'' +
+                ", genre='" + genre + '\'' +
+                ", releaseYear='" + releaseYear + '\'' +
+                ", director='" + director + '\'' +
+                ", picture='" + picture + '\'' +
+                ", trailerLink='" + trailerLink + '\'' +
+                ", characters=" + characters +
+                ", franchise=" + franchise +
+                '}';
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -38,6 +52,7 @@ public class Movie {
     /**
      * Creates a middle table between movie table and character table
      */
+    //@ManyToMany(mappedBy = "movies", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @ManyToMany
     @JoinTable(
             name = "movie_characters",
@@ -46,7 +61,7 @@ public class Movie {
     public List<Characters> characters;
 
 
-    @Nullable
+   @Nullable
     @JsonGetter("characters")
     public List<String> characters(){
         return characters.stream().
@@ -59,7 +74,7 @@ public class Movie {
     @Nullable
     @ManyToOne
     @JoinColumn(name="franchise_id")
-    private Franchise franchise;
+    public Franchise franchise;
 
     public List<Characters> getCharacters() {
         return characters;

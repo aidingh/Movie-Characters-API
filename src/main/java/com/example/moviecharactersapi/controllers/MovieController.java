@@ -7,10 +7,8 @@ import com.example.moviecharactersapi.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
-import javax.swing.text.html.Option;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 public class MovieController {
@@ -30,15 +28,35 @@ public class MovieController {
     @GetMapping("/read/all/movie")
     public List<Movie> readAllMovies()
     {
-        return movieRepository.findAll();
+      //  return movieRepository.findAll();
+        List<Movie> movies = movieRepository.findAll();
+        return movies;
+    }
+    @GetMapping("/read/all/characterInMovie/{id}")
+    public List<Characters> readAllCharactersInMovie(@PathVariable Integer id)
+    {
+
+        List<Characters> characters = null;
+
+        if(movieRepository.existsById(id)){
+            Movie movie = movieRepository.findById(id).get();
+            characters = movie.getCharacters();
+        }
+
+          return characters;
     }
 
-    @PutMapping("/update/character/movie/{id}/characters")
+    @PostMapping("/update/character/movie/{id}")
     public void updateCharactersInMovies(@PathVariable Integer id, @RequestBody List<Integer> characterId)
     {
-      // Ej klart
-     Movie movie = movieRepository.findById(id).get();
 
- 
+      Movie movie = movieRepository.findById(id).get();
+
+       for(int ids : characterId){
+           Characters characterTmp = characterRepository.findById(ids).get();
+           movie.characters.add(characterTmp);
+       }
+       movieRepository.save(movie);
+
     }
 }

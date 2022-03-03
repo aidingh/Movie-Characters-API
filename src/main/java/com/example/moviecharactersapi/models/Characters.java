@@ -6,6 +6,7 @@ import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 @Entity
@@ -30,6 +31,6 @@ public class Characters {
     public String pictureUrl;
 
     @Nullable
-    @ManyToMany(mappedBy = "movieCharacter")
-    Set<Movie> characterMovies;
+    @ManyToMany(mappedBy = "characters")
+    List<Movie> movies;
 }

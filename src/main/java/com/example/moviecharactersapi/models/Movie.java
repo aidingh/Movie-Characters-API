@@ -7,7 +7,6 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -39,22 +38,13 @@ public class Movie {
     /**
      * Creates a middle table between movie table and character table
      */
-    @Nullable
     @ManyToMany
     @JoinTable(
             name = "movie_characters",
             joinColumns = @JoinColumn(name = "movie_id"),
             inverseJoinColumns = @JoinColumn(name = "characters_id"))
-    Set<Characters> movieCharacter;
-
-    @Nullable
-    @ManyToOne
-    @JoinColumn(name="franchise_id")
-    private Franchise franchise;
-
-    @Nullable
-    @ManyToMany
     public List<Characters> characters;
+
 
     @Nullable
     @JsonGetter("characters")
@@ -62,4 +52,17 @@ public class Movie {
         return characters.stream().
                 map(character -> "/read/character/"+ character.getId()).collect(Collectors.toList());
     }
+
+    /**
+     * Franchise table that belong to each movie entity
+     */
+    @Nullable
+    @ManyToOne
+    @JoinColumn(name="franchise_id")
+    private Franchise franchise;
+
+    public List<Characters> getCharacters() {
+        return characters;
+    }
+
 }

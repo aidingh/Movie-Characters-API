@@ -7,10 +7,33 @@ import java.util.Set;
 
 @Entity
 public class Franchise {
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public Set<Movie> getMovieFranchise() {
+        return movieFranchise;
+    }
+
+    public void setMovieFranchise(Set<Movie> movieFranchise) {
+        this.movieFranchise = movieFranchise;
+    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    public Integer id;
 
     @Column
     public String name;

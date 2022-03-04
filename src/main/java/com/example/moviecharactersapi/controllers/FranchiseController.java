@@ -3,10 +3,7 @@ package com.example.moviecharactersapi.controllers;
 import com.example.moviecharactersapi.models.Franchise;
 import com.example.moviecharactersapi.repositories.FranchiseRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -34,5 +31,26 @@ public class FranchiseController {
             return franchiseRepository.findById(id).get();
         }
         return null;
+    }
+
+    @GetMapping("/update/franchise")
+    public Franchise updateFranchiseById(@RequestBody Franchise franchise)
+    {
+        Franchise tempFranchise = getFranchiseById(franchise.id);
+        tempFranchise.setName(franchise.name);
+        tempFranchise.setDescription(franchise.description);
+        return franchiseRepository.save(tempFranchise);
+    }
+
+    @DeleteMapping("/delete/franchise/{id}")
+    public boolean deleteFranchiseById(@PathVariable Integer id)
+    {
+        if(this.getFranchiseById(id) != null){
+            franchiseRepository.deleteById(id);
+            return true;
+        }
+        else{
+            return false;
+        }
     }
 }

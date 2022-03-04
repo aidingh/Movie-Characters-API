@@ -5,11 +5,14 @@ import com.example.moviecharactersapi.models.Movie;
 import com.example.moviecharactersapi.repositories.CharacterRepository;
 import com.example.moviecharactersapi.repositories.MovieRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
 public class MovieController {
+    HttpStatus httpStatus;
 
     @Autowired
     public MovieRepository movieRepository;
@@ -32,18 +35,20 @@ public class MovieController {
     }
     
     @GetMapping("/read/all/characterInMovie/{id}")
-    public List<Characters> readAllCharactersInMovie(@PathVariable Integer id)
+    public ResponseEntity <List<Characters>> readAllCharactersInMovie(@PathVariable Integer id)
     {
-
-        List<Characters> characters = null;
+        List<Characters> charactersInMovie = null;
 
         if(movieRepository.existsById(id)){
             Movie movie = movieRepository.findById(id).get();
-            characters = movie.getCharacters();
-        }
-
-          return characters;
+            charactersInMovie = movie.getCharacters();
+            httpStatus = HttpStatus.OK;
+            } else {
+            httpStatus = HttpStatus.NO_CONTENT;
+            }
+          return new ResponseEntity<>(charactersInMovie, httpStatus);
     }
+
 
     @GetMapping("/update/movie")
     public Movie updateCharacterById(@RequestBody Movie movie)
@@ -83,13 +88,6 @@ public class MovieController {
     @PostMapping("/update/character/movie/{movie_id}")
     public void updateCharactersInMovies(@PathVariable Integer movie_id, @RequestBody Integer[] characterId)
     {
-        /*System.out.println(movie_id);
-        System.out.println(characterId.length);
-
-        System.out.println(movie);*/
-
-        //System.out.println(movie.characters.get(0));
-
         Movie movie = movieRepository.findById(movie_id).get();
 
        for(int ids : characterId){
@@ -97,6 +95,5 @@ public class MovieController {
            movie.characters.add(characterTmp);
        }
        movieRepository.save(movie);
-
     }
 }

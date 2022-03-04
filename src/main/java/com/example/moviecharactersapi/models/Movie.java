@@ -60,8 +60,7 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "characters_id"))
     public List<Characters> characters;
 
-
-   @Nullable
+    @Nullable
     @JsonGetter("characters")
     public List<String> characters(){
         return characters.stream().
@@ -75,6 +74,11 @@ public class Movie {
     @ManyToOne
     @JoinColumn(name="franchise_id")
     public Franchise franchise;
+
+    /*@JsonGetter("franchise")
+    public String franchise() {
+        return franchise != null ? "/read/franchise/" + franchise.getId() : null;
+    }*/
 
     public List<Characters> getCharacters() {
         return characters;

@@ -1,35 +1,18 @@
 package com.example.moviecharactersapi.models;
 
+import com.fasterxml.jackson.annotation.JsonGetter;
 import com.sun.istack.Nullable;
+import lombok.Getter;
+import lombok.Setter;
 
 import javax.persistence.*;
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
+@Getter
+@Setter
 @Entity
 public class Franchise {
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public Set<Movie> getMovieFranchise() {
-        return movieFranchise;
-    }
-
-    public void setMovieFranchise(Set<Movie> movieFranchise) {
-        this.movieFranchise = movieFranchise;
-    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -43,7 +26,10 @@ public class Franchise {
 
     @Nullable
     @OneToMany(mappedBy="franchise")
-    public Set<Movie> movieFranchise;
+    public List<Movie> movies;
 
-
+    @JsonGetter("movies")
+    public List<String> movies(){
+        return movies.stream().map(movie -> "/read/movie/"+ movie.getId()).collect(Collectors.toList());
+    }
 }

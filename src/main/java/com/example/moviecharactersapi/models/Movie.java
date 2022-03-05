@@ -4,55 +4,68 @@ import com.fasterxml.jackson.annotation.JsonGetter;
 import com.sun.istack.Nullable;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.*;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * @author Aidin Ghassemloi och Richard Cruz.
+ * Entity class.
+ * Class defines attributes within the entity and its relation to other entitys.
+ */
 @Getter
 @Setter
 @Entity
 public class Movie {
-    @Override
-    public String toString() {
-        return "Movie{" +
-                "id=" + id +
-                ", movieTitle='" + movieTitle + '\'' +
-                ", genre='" + genre + '\'' +
-                ", releaseYear='" + releaseYear + '\'' +
-                ", director='" + director + '\'' +
-                ", picture='" + picture + '\'' +
-                ", trailerLink='" + trailerLink + '\'' +
-                ", characters=" + characters +
-                ", franchise=" + franchise +
-                '}';
-    }
 
+    /**
+     * Id attribute.
+     */
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public int id;
 
+    /**
+     * Movie title attribute.
+     */
     @Column
     public String movieTitle;
 
+    /**
+     * Movie genre attribute.
+     */
     @Column
     public String genre;
 
+    /**
+     * Movie release year attribute.
+     */
     @Column
     public String releaseYear;
 
+    /**
+     * Movie director attribute.
+     */
     @Column
     public String director;
 
+    /**
+     * Movie picture attribute.
+     */
     @Column
     public String picture;
 
+    /**
+     * Movie trailer link attribute.
+     */
     @Column
     public String trailerLink;
+
     /**
-     * Creates a middle table between movie table and character table
+     * Defines a many-to-many relation with the Characters entity.
+     * A linking table is made called movie_characters.
+     * It joins the columns by the ids.
      */
-    //@ManyToMany(mappedBy = "movies", cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @ManyToMany
     @JoinTable(
             name = "movie_characters",
@@ -60,6 +73,9 @@ public class Movie {
             inverseJoinColumns = @JoinColumn(name = "characters_id"))
     public List<Characters> characters;
 
+    /**
+     * Function will map and update records.
+     */
     @Nullable
     @JsonGetter("characters")
     public List<String> characters(){
@@ -68,17 +84,12 @@ public class Movie {
     }
 
     /**
-     * Franchise table that belong to each movie entity
+     * Defines a many-to-one relation with the Franchise entity.
      */
     @Nullable
     @ManyToOne
     @JoinColumn(name="franchise_id")
     public Franchise franchise;
-
-    /*@JsonGetter("franchise")
-    public String franchise() {
-        return franchise != null ? "/read/franchise/" + franchise.getId() : null;
-    }*/
 
     public List<Characters> getCharacters() {
         return characters;
